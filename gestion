@@ -1,0 +1,89 @@
+#include "nomfct.h"
+#include "bibliotheque.h"
+
+
+void menu2() {
+
+    int choix;
+    printf("\nVoici la liste des articles disponibles dans notre stock :\n\n");
+    FILE* fichier_stock = fopen("stock.txt", "r+");
+    if (fichier_stock == NULL) {
+        printf("Erreur lors de l'ouverture du fichier stock.txt.\n");
+        return;
+    }
+
+    char ligne[TAILLE];
+    while (fgets(ligne, sizeof(ligne), fichier_stock) != NULL) {
+        printf("%s", ligne);
+    }
+
+    do {
+        printf("\nVoulez-vous remettre du stock ?\n");
+        printf("1. Oui\n");
+        printf("2. Non\n");
+        scanf("%d", &choix);
+    } while (choix != 1 && choix != 2);
+
+    if (choix == 1) {
+        printf("Pour quel article voulez-vous remettre du stock ? ");
+        char article[TAILLE];
+        scanf(" %[^\n]", article); // Lire l'article avec les espaces
+
+        int quantite;
+        printf("Quelle quantité voulez-vous ajouter au stock de l'article '%s' ? : ", article);
+        scanf("%d", &quantite);
+
+        // Rechercher et mettre à jour le stock dans le fichier
+        fseek(fichier_stock, 0, SEEK_SET); // Retourner au début du fichier
+        FILE* fichier_temp = fopen("stock_temp.txt", "w"); // Fichier temporaire pour stocker les modifications
+
+        if (fichier_temp == NULL) {
+            printf("Erreur lors de l'ouverture du fichier stock_temp.txt.\n");
+            fclose(fichier_stock);
+            return;
+        }
+
+        int modifie = 0; // Indicateur pour vérifier si l'article a été trouvé et modifié
+
+        while (fgets(ligne, sizeof(ligne), fichier_stock) != NULL) {
+            char temp[TAILLE];
+            strcpy(temp, ligne);
+            char* ptr = strtok(temp, ":");
+            if (ptr != NULL && strcmp(ptr, article) == 0) {
+                ptr = strtok(NULL, ":");
+                int stock = atoi(ptr);
+                stock += quantite;
+
+                // Vérifier les contraintes de stock maximal
+                if (stock > 500) {
+                    printf("Le stock maximal pour les articles est de 500.\n");
+                    fclose(fichier_temp);
+                    fclose(fichier_stock);
+                    remove("stock_temp.txt"); // Supprimer le fichier temporaire
+                    return;
+                }
+
+                sprintf(temp, "%s: %d\n", article, stock);
+                fputs(temp, fichier_temp);
+                printf("Le stock de l'article '%s' a été modifié avec succès.\n", article);
+                modifie = 1;
+            } else {
+                fputs(ligne, fichier_temp);
+            }
+        }
+
+        if (!modifie) {
+            printf("L'article '%s' n'a pas été trouvé dans le stock.\n", article);
+        }
+
+        fclose(fichier_temp);
+        fclose(fichier_stock);
+
+        // Remplacer le fichier original par le fichier temporaire
+        remove("stock.txt");
+        rename("stock_temp.txt", "stock.txt");
+    } else {
+        fclose(fichier_stock);
+    }
+}
+
