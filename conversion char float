@@ -1,0 +1,20 @@
+#include "bibliotheque.h"
+#include "nomfct.h"
+
+float additionnerPrixPanier() {
+    FILE* sommepanier = fopen("prix_panier.txt", "r");
+    if (sommepanier == NULL) {
+        printf("Le fichier prix_panier.txt n'a pas été trouvé.\n");
+        return 0.0;
+    }
+    
+    float somme = 0.0;
+    float prix;
+    while (fscanf(sommepanier, "%f", &prix) == 1) {
+      void cleanBuffer();
+        somme += prix;
+    }
+    
+    fclose(sommepanier);
+    return somme;
+}
