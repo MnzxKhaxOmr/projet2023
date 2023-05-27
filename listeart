@@ -1,0 +1,17 @@
+#include "bibliotheque.h"
+#include "nomfct.h"
+
+void afficherListeArticle(const char* s_articles) {
+    printf("\nVoici la liste des articles disponibles dans notre boutique :\n\n");
+    FILE* listeArticle = fopen("s_articles.txt", "r");
+    if (listeArticle == NULL) {
+        printf("Erreur lors de l'ouverture du fichier '%s'.\n", s_articles);
+        return;
+    }
+
+    char ligne[TAILLE];
+    while (fgets(ligne, sizeof(ligne), listeArticle) != NULL) {
+        printf("%s", ligne);
+    }
+
+}
