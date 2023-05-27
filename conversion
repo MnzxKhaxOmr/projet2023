@@ -1,0 +1,21 @@
+#include "bibliotheque.h"
+#include "nomfct.h"
+
+float conversionfloat() {
+    FILE* fichier_prix = fopen("prix_panier.txt", "r");
+    if (fichier_prix == NULL) {
+        printf("Le fichier prix_panier.txt n'a pas été trouvé.\n");
+        return -1.0;
+    }
+    
+    float prix;
+    if (fscanf(fichier_prix, "%f", &prix) != 1) {
+      void cleanBuffer();
+        printf("Erreur lors de la lecture du prix.\n");
+        fclose(fichier_prix);
+        return -1.0;
+    }
+    
+    fclose(fichier_prix);
+    return prix;
+}
