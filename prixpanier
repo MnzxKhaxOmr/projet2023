@@ -1,0 +1,83 @@
+#include "bibliotheque.h"
+#include "nomfct.h"
+
+void PrixPanier(float prix) {
+    FILE* fichier_prix_panier = fopen("prix_panier.txt", "a");
+    if (fichier_prix_panier == NULL) {
+        printf("Erreur fichier\n");
+        return;
+    }
+
+    fprintf(fichier_prix_panier, "%.2f\n", prix);
+
+    fclose(fichier_prix_panier);
+}
+
+void AjouterAuPanier(const char* ligne) {
+    FILE* fichier_panier = fopen("panier.txt", "a");
+    if (fichier_panier == NULL) {
+        printf("Erreur fichier\n");
+        return;
+    }
+
+    fprintf(fichier_panier, "%s", ligne);
+
+    fclose(fichier_panier);
+}
+
+void recuperer_prix() {
+    int numidentifiant;
+    printf("\n\n\nVeuillez choisir un ID correspondant à l'article entre 1 et 20 :\n ");
+    scanf("%d", &numidentifiant);
+  void cleanBuffer();
+
+    if (numidentifiant < 1 || numidentifiant > 20) {
+        printf("entre 1 et 20.\n");
+        return;
+    }
+
+    FILE* fichier_prix = fopen("prix.txt", "r");
+    if (fichier_prix == NULL) {
+        printf("Erreur fichier introuvable.\n");
+        return;
+    }
+
+    char ligne[10000];
+    int i;
+    for (i = 1; i <= numidentifiant; i++) {
+        if (fgets(ligne, sizeof(ligne), fichier_prix) == NULL) {
+            printf("Le fichier ne contient pas de prix.\n");
+            fclose(fichier_prix);
+            return;
+        }
+    }
+
+    float prix = atof(ligne);
+    printf("\n\nLe prix associé %d est de %.2f\n", numidentifiant, prix);
+
+    fclose(fichier_prix);
+
+    PrixPanier(prix);
+
+    FILE* fichier_articles = fopen("s_articles2.txt", "r");
+    if (fichier_articles == NULL) {
+        printf("Erreur, le fichier n'a pas été trouvé...\n");
+        return;
+    }
+
+    for (i = 1; i <= numidentifiant; i++) {
+        if (fgets(ligne, sizeof(ligne), fichier_articles) == NULL) {
+            printf("Le fichier ne contient pas de partie.\n");
+            fclose(fichier_articles);
+            return;
+        }
+    }
+
+    printf("\n\nLa partie associée au numéro identifiant %d est :\n%s", numidentifiant, ligne);
+
+    fclose(fichier_articles);
+
+    AjouterAuPanier(ligne);
+    printf("L'article a été ajouté au panier.\n");
+}
+
