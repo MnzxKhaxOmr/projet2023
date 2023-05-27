@@ -1,0 +1,7 @@
+#include "bibliotheque.h"
+#include "nomfct.h"
+
+void cleanBuffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF) {}
+}
