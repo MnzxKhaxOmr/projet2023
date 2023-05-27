@@ -1,0 +1,60 @@
+#include "bibliotheque.h"
+#include "nomfct.h"
+
+int nouvelutilisateur() {
+  int i;
+  int choixRole = 0;
+  FILE *fichier;
+  fichier = fopen("utilisateur.txt", "r+");
+
+  if (fichier == NULL) {
+    printf("Erreur lors de l'ouverture du fichier.\n");
+    return 1;
+  }
+
+  Utilisateur *utilisateur = malloc(one * sizeof *utilisateur);
+
+  printf("\nEntrez vos identifiants\nEt utilisez le tiret - pour les espaces\n");
+
+  for (i = 0; i < one; i++) {
+    printf("\nEntrez un Login : ");
+    if (scanf("%s", utilisateur[i].login) != 1) {
+      void cleanBuffer();
+      printf("Erreur de lecture du login.\n");
+      return 1;
+    }
+
+    printf("\nEntrez un Mot de passe : ");
+    if (scanf("%s", utilisateur[i].mdp) != 1) {
+      void cleanBuffer();
+      printf("Erreur de lecture du mot de passe.\n");
+      return 1;
+    }
+
+    do {
+      printf("Êtes-vous :\n1. Un Client\n2. Un Administrateur\n");
+      scanf("%d", &choixRole);
+      void cleanBuffer();
+    } while (!(choixRole == 1 || choixRole == 2));
+
+    switch (choixRole) {
+      case 1:
+        fseek(fichier, 0, SEEK_END);
+        fprintf(fichier, "\n%s, %s, Client", utilisateur[i].login, utilisateur[i].mdp);
+        break;
+      case 2:
+        fseek(fichier, 0, SEEK_END);
+        fprintf(fichier, "\n%s, %s, Administrateur", utilisateur[i].login, utilisateur[i].mdp);
+        break;
+    }
+  }
+
+  for (i = 0; i < one; i++) {
+    printf("\nLogin: %s, Mot de passe: %s\n", utilisateur[i].login, utilisateur[i].mdp);
+  }
+
+  fclose(fichier);
+  free(utilisateur);
+
+  return 0;
+}
