@@ -1,0 +1,108 @@
+#include "bibliotheque.h"
+#include "nomfct.h"
+
+void menu1()
+{
+  FILE *fichier;
+  int choix2 = 0;
+  int choixMenu;
+  int choixRole;
+  int choixEnsuite;
+  int suite = 0;
+  Utilisateur utilisateur;
+  Article *article;
+
+  int a;
+  int i;
+  int ok = 0;
+     do{
+  printf("\n\n---------------------------------------------------------------------------\n");
+  printf ("\nBienvenue à OKLM streetwear !!!\n\n");
+  printf ("1. Commander !\n");
+  printf ("2. Voir le panier\n");
+  printf ("3. Historique d'achats\n");
+  printf ("4. Se déconnecter.\n");
+  scanf ("%d", &choixMenu);
+ void cleanBuffer();
+
+  switch (choixMenu)
+    {
+
+    case 1:
+      printf("\n\n--------------------------------------------------------------------------------\n\n");
+      printf ("\nQuel article vous fait de l'oeil ?\n\n");
+      achat();
+      break;
+
+
+     case 2:
+    printf("\n Souhaitez-vous voir votre beau panier ?\n\n");
+    printf("1. Biensur !\n");
+    printf("2. Non merci...\n");
+    scanf("%d", &choixEnsuite);
+    void cleanBuffer();
+
+    if (choixEnsuite == 1) {
+        float prix = conversionfloat();
+        float somme = additionnerPrixPanier();
+        printf("\n\n\n----------------------------------------------------------\n\n");
+        printf("Le prix total du panier est : %.2f €\n", somme);
+        afficher_panier();
+        confirmerAchat();
+    }
+    
+       
+    break;
+      
+    case 3:
+
+      printf ("\n Souhaitez-vous accéder à l'historique des achats ?\n");
+      printf ("1. Biensur !\n");
+      printf ("2. Non merci...\n");
+      scanf ("%d", &choixEnsuite);
+      void cleanBuffer();
+      afficherHistorique();
+      break;
+      
+    case 4:
+
+      printf ("Souhaitez-vous vraiment vous déconnecter ?\n\n");
+      printf ("1. Allez dehors !\n");
+      printf ("2. Non je reste...\n");
+      scanf ("%d", &choixEnsuite);
+      void cleanBuffer();
+      if(choixEnsuite==1){
+       
+        sleep(2);
+        
+
+        printf("A la prochaine sur OKLM Shop !)\n");
+          sleep(3);
+        exit(0);
+      }
+      else{
+        break;
+      }
+      
+
+      break;
+
+      switch (choixEnsuite)
+	                {
+
+	case 1:
+        suite=1;
+	    exit (1);
+	    break;
+
+	case 2:
+	
+        suite=0;
+	    break;
+	                }
+	                break;
+            }
+
+    }while(suite==0);
+
+}
