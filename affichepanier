@@ -1,0 +1,18 @@
+#include "bibliotheque.h"
+#include "nomfct.h"
+
+void afficher_panier() {
+    FILE* fichier_panier = fopen("panier.txt", "r");
+    if (fichier_panier == NULL) {
+        printf("Erreur lors de l'ouverture du fichier panier.txt.\n");
+        return;
+    }
+    
+    printf("\nContenu du panier :\n");
+    char ligne[1000];
+    while (fgets(ligne, sizeof(ligne), fichier_panier) != NULL) {
+        printf("%s", ligne);
+    }
+    
+    fclose(fichier_panier);
+}
