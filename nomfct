@@ -1,0 +1,36 @@
+#include"bibliotheque.h"
+
+typedef struct {
+  char login[100];
+  char mdp[100];
+  char role[100];
+} Utilisateur;
+
+typedef struct
+{
+  char numIden[TAILLE];
+  char nom[TAILLE];
+  char marque[TAILLE];
+  float prix;
+  char couleur [TAILLE];
+  char desc [TAILLE];
+  int quantite;
+} Article;
+
+int login();
+void menu2();
+void menu1();
+char* recupererTexte(const char* fichier);
+float conversionfloat();
+void achat();
+void prochaineEtape(const char* partie);
+int nouvelutilisateur();
+void afficherListeArticle(const char* s_articles);
+void PrixPanier(float prix);
+float additionnerPrixPanier();
+void afficher_panier();
+void recuperer_prix();
+void cleanBuffer();
+void historique();
+void confirmerAchat(); 
+void afficheHistorique();
