@@ -1,0 +1,7 @@
+#include "bibliotheque.h"
+#include "nomfct.h"
+
+void achat() {
+    afficherListeArticle("s_articles.txt");
+    recuperer_prix();
+}
